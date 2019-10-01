@@ -3,6 +3,7 @@ package com.example.endevinaunnumero;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
@@ -15,8 +16,9 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
+    int contadorIntents = 0;
+    String resultado = new String();
 
-    public static final String EXTRA_MESSAGE = "com.example.endevinaunnumero.MESSAGE";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -28,6 +30,7 @@ public class MainActivity extends AppCompatActivity {
         final EditText numberInput = findViewById(R.id.NumberInput);
         Button button = findViewById(R.id.button);
         final Button hall = findViewById(R.id.Hall);
+        final TextView intents = findViewById(R.id.Intents);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -43,6 +46,9 @@ public class MainActivity extends AppCompatActivity {
                     pista = "Has ganado";
                     hall.setVisibility(View.VISIBLE);
                 }
+                contadorIntents++;
+                resultado = "Nombre intents: " + String.valueOf(contadorIntents);
+                intents.setText(resultado);
                 Context context = getApplicationContext();
                 CharSequence text = pista;
                 int duration = Toast.LENGTH_LONG;
@@ -53,7 +59,9 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
-    public void sendMessage(View view) {
-
+    public void abrirActivity2(View view) {
+       Intent intent = new Intent(MainActivity.this, Activity2.class);
+       intent.putExtra("Intents", contadorIntents);
+       startActivity(intent);
     }
 }
