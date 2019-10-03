@@ -2,10 +2,14 @@ package com.example.endevinaunnumero;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
@@ -16,9 +20,8 @@ import android.widget.Toast;
 import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
-    int contadorIntents = 0;
+    Jugador player = new Jugador();
     String resultado = new String();
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,9 +48,10 @@ public class MainActivity extends AppCompatActivity {
                 } else {
                     pista = "Has ganado";
                     hall.setVisibility(View.VISIBLE);
+                    openDialog();
                 }
-                contadorIntents++;
-                resultado = "Nombre intents: " + String.valueOf(contadorIntents);
+                player.contadorIntents++;
+                resultado = "Nombre intents: " + String.valueOf(player.contadorIntents);
                 intents.setText(resultado);
                 Context context = getApplicationContext();
                 CharSequence text = pista;
@@ -60,8 +64,12 @@ public class MainActivity extends AppCompatActivity {
         });
     }
     public void abrirActivity2(View view) {
-       Intent intent = new Intent(MainActivity.this, Activity2.class);
-       intent.putExtra("Intents", contadorIntents);
-       startActivity(intent);
+        Intent intent = new Intent(MainActivity.this, Activity2.class);
+        intent.putExtra("Intents", player.contadorIntents);
+        startActivity(intent);
+    }
+    public void openDialog() {
+        Dialogo dialogo = new Dialogo();
+        dialogo.show(getSupportFragmentManager(), "dialog");
     }
 }

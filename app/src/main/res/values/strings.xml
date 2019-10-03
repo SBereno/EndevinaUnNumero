@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">EndevinaUnNumero</string>
+    <string name="signin">Enviar</string>
+    <string name="cancel">Cancelar</string>
 </resources>
