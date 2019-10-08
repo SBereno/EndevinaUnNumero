@@ -45,29 +45,14 @@
         android:id="@+id/Hall"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="37dp"
-        android:layout_marginLeft="37dp"
-        android:layout_marginTop="160dp"
-        android:layout_marginBottom="146dp"
+        android:layout_marginStart="70dp"
+        android:layout_marginLeft="70dp"
+        android:layout_marginBottom="145dp"
         android:onClick="abrirActivity2"
         android:text="Records"
         android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumberInput" />
-
-    <Button
-        android:id="@+id/Restart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="160dp"
-        android:layout_marginEnd="37dp"
-        android:layout_marginRight="37dp"
-        android:layout_marginBottom="146dp"
-        android:text="Torna a jugar"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NumberInput" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/Intents"
@@ -82,4 +67,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/Restart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="70dp"
+        android:layout_marginRight="70dp"
+        android:layout_marginBottom="145dp"
+        android:onClick="restartClicker"
+        android:text="Restart"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
 </androidx.constraintlayout.widget.ConstraintLayout>

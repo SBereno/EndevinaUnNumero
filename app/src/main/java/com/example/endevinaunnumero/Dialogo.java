@@ -10,6 +10,9 @@ import androidx.appcompat.app.AppCompatDialogFragment;
 
 public class Dialogo extends AppCompatDialogFragment {
 
+    private EditText textIntroduit;
+    private String nom;
+
     public android.app.Dialog onCreateDialog(Bundle savedInstanceState) {
 
     AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -18,9 +21,8 @@ public class Dialogo extends AppCompatDialogFragment {
             .setPositiveButton(R.string.signin, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int id) {
-                    EditText nombre = getDialog().findViewById(R.id.Nom);
-                    Jugador player = new Jugador();
-                    player.nomJugador = nombre.getText().toString();
+                    textIntroduit = getDialog().findViewById(R.id.Nom);
+                    nom = textIntroduit.getText().toString();
                 }
             })
             .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
@@ -29,5 +31,21 @@ public class Dialogo extends AppCompatDialogFragment {
                 }
             });
         return builder.create();
+    }
+
+    public EditText getTextIntroduit() {
+        return textIntroduit;
+    }
+
+    public void setTextIntroduit(EditText textIntroduit) {
+        this.textIntroduit = textIntroduit;
+    }
+
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
 }
