@@ -7,10 +7,9 @@
     tools:context=".Activity2">
 
     <ListView
+        android:id="@+id/HallOfFame"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        tools:layout_editor_absoluteX="121dp"
+        tools:layout_editor_absoluteY="277dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>

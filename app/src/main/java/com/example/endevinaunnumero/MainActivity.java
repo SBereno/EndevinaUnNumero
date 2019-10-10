@@ -24,21 +24,19 @@ import java.util.Random;
 
 public class MainActivity extends AppCompatActivity {
     Jugador player = new Jugador();
-    Dialogo dial = new Dialogo();
     String resultado = new String();
     private int numRandom = generarRandom();
-    public ArrayList<Jugador> listaJugadors = new ArrayList<Jugador>();
+    private String name;
+    TextView intents = findViewById(R.id.Intents);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_main);
-
         final EditText numberInput = findViewById(R.id.NumberInput);
         final Button button = findViewById(R.id.button);
         final Button hall = findViewById(R.id.Hall);
-        final TextView intents = findViewById(R.id.Intents);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,11 +55,6 @@ public class MainActivity extends AppCompatActivity {
                     } else {
                         pista = "Has ganado";
                         openDialog();
-                        player.setNomJugador(dial.getNom());
-                        listaJugadors.add(player);
-                        for(Jugador jugador : listaJugadors) {
-                            System.out.println(jugador.toString());
-                        }
                     }
                     resultado = "Nombre intents: " + String.valueOf(player.getContadorIntents());
                     intents.setText(resultado);
@@ -86,24 +79,37 @@ public class MainActivity extends AppCompatActivity {
     public void openDialog() {
         final Dialog dialog = new Dialog(this);
         dialog.setContentView(R.layout.dialog);
+        dialog.setCancelable(false);
         dialog.setTitle("Usuario");
         dialog.show();
         Button register = dialog.findViewById(R.id.botonDialog);
+        Button cancelar = dialog.findViewById(R.id.botonDialogC);
         register.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 EditText textName = dialog.findViewById(R.id.etNombre);
                 name = textName.getText().toString();
+                player.setNomJugador(name);
+                Activity2.jugadors.add(player);
                 dialog.dismiss();
             }
         });
-        return name;
-    }
+
+        cancelar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+                player.setContadorIntents(0);
+                numRandom = generarRandom();
+            }
+        });
     }
 
     public void restartClicker(View view) {
         player.setContadorIntents(0);
         numRandom = generarRandom();
+        player.setNomJugador("");
+        intents.setText("");
     }
 
     public static int generarRandom() {
