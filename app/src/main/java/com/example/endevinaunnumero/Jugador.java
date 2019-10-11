@@ -2,8 +2,8 @@ package com.example.endevinaunnumero;
 
 public class Jugador {
 
-    String nomJugador = new String();
-    int contadorIntents = 0;
+    String nomJugador;
+    int contadorIntents;
 
     public String getNomJugador() {
         return nomJugador;
@@ -21,6 +21,11 @@ public class Jugador {
         this.contadorIntents = contadorIntents;
     }
 
+
+    public Jugador(String nomJugador, int contadorIntents) {
+        this.nomJugador = nomJugador;
+        this.contadorIntents = contadorIntents;
+    }
 
     @Override
     public String toString() {
