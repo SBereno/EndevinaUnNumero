@@ -29,9 +29,6 @@ public class Jugador {
 
     @Override
     public String toString() {
-        return "Jugador{" +
-                "nomJugador='" + nomJugador + '\'' +
-                ", contadorIntents=" + contadorIntents +
-                '}';
+        return "Jugador:" + nomJugador + ", Intents:" + contadorIntents;
     }
 }
