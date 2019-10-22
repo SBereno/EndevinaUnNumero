@@ -13,6 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.OutputStreamWriter;
+
 public class MainActivity extends AppCompatActivity {
     private String resultado = new String();
     private int numRandom = generarRandom();
@@ -82,7 +89,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText textName = dialog.findViewById(R.id.etNombre);
                 name = textName.getText().toString();
-                Activity2.jugadors.add(new Jugador(name, contador));
+                persistencia(name, contador);
                 dialog.dismiss();
             }
         });
@@ -97,10 +104,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    public void persistencia(String nom, int intents) {
+        try {
+            OutputStreamWriter osw = new OutputStreamWriter(openFileOutput("HallOfFame.txt", Context.MODE_APPEND));
+            osw.write(nom + "-" + intents);
+            osw.append("\r\n");
+            osw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void restartClicker(View view) {
         contador = 0;
         numRandom = generarRandom();
-        intents.setText("");
+        intents.setText("Nombre intents:");
     }
 
     public static int generarRandom() {
