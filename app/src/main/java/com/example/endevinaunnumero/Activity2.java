@@ -11,12 +11,13 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Collections;
 import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
 
-    static ArrayList<Jugador> jugadors = new ArrayList<Jugador>();
+    static List<Jugador> jugadors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,7 @@ public class Activity2 extends AppCompatActivity {
     }
 
     public void leerArchivo() {
+        jugadors = new ArrayList<>();
         try {
             BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("HallOfFame.txt")));
             String linea;
