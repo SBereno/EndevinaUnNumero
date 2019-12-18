@@ -2,6 +2,7 @@ package com.example.endevinaunnumero;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,7 +18,7 @@ import java.util.Comparator;
 
 public class Activity2 extends AppCompatActivity {
 
-    static List<Jugador> jugadors;
+    static ArrayList<Jugador> jugadors;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,8 +35,8 @@ public class Activity2 extends AppCompatActivity {
             BufferedReader br = new BufferedReader(new InputStreamReader(openFileInput("HallOfFame.txt")));
             String linea;
             while ((linea=br.readLine())!=null){
-                String[] cadena = linea.split("-");
-                jugadors.add(new Jugador(cadena[0],Integer.parseInt(cadena[1])));
+                String[] cadena = linea.split(";");
+                jugadors.add(new Jugador(cadena[0],Integer.parseInt(cadena[1]), Uri.parse(cadena[2])));
             }
         } catch (FileNotFoundException e) {
             e.printStackTrace();
@@ -51,7 +52,7 @@ public class Activity2 extends AppCompatActivity {
                 return o1.getContadorIntents() - o2.getContadorIntents();
             }
         });
-        ArrayAdapter<Jugador> itemsAdapter = new ArrayAdapter<Jugador>(this, android.R.layout.simple_list_item_1, jugadors);
+        JugadorAdapter itemsAdapter = new JugadorAdapter(this, jugadors);
         ListView hallOfFame = (ListView) findViewById(R.id.HallOfFame);
         hallOfFame.setAdapter(itemsAdapter);
     }

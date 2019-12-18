@@ -1,12 +1,16 @@
 package com.example.endevinaunnumero;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.FileProvider;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 
+import android.os.Environment;
+import android.provider.MediaStore;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -19,6 +23,8 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.OutputStreamWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
     private String resultado = new String();
@@ -26,6 +32,9 @@ public class MainActivity extends AppCompatActivity {
     private String name;
     private TextView intents;
     private int contador;
+    static File photoFile;
+    static final int REQUEST_TAKE_PHOTO = 1;
+    String currentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,8 +98,9 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 EditText textName = dialog.findViewById(R.id.etNombre);
                 name = textName.getText().toString();
-                persistencia(name, contador);
                 dialog.dismiss();
+                dispatchTakePictureIntent();
+                persistencia(name, contador);
             }
         });
 
@@ -107,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
     public void persistencia(String nom, int intents) {
         try {
             OutputStreamWriter osw = new OutputStreamWriter(openFileOutput("HallOfFame.txt", Context.MODE_APPEND));
-            osw.write(nom + "-" + intents);
+            osw.write(nom + ";" + intents + ";" + photoFile.toString());
             osw.append("\r\n");
             osw.close();
         } catch (FileNotFoundException e) {
@@ -126,5 +136,38 @@ public class MainActivity extends AppCompatActivity {
     public static int generarRandom() {
         int numeroAleatorio = (int) (Math.random() * 100 + 1);
         return numeroAleatorio;
+    }
+
+    private void dispatchTakePictureIntent() {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            try {
+                photoFile = createImageFile();
+            } catch (IOException ex) {
+            }
+            if (photoFile != null) {
+                Uri photoURI = FileProvider.getUriForFile(this,
+                        "com.example.endevinaunnumero.fileprovider",
+                        photoFile);
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI);
+                startActivityForResult(takePictureIntent, REQUEST_TAKE_PHOTO);
+            }
+        }
+    }
+
+    private File createImageFile() throws IOException {
+        // Create an image file name
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        File storageDir = getExternalFilesDir(Environment.DIRECTORY_PICTURES);
+        File image = File.createTempFile(
+                imageFileName,  /* prefix */
+                ".jpg",         /* suffix */
+                storageDir      /* directory */
+        );
+
+        // Save a file: path for use with ACTION_VIEW intents
+        currentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
